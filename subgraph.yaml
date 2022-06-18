@@ -1,0 +1,26 @@
+specVersion: 0.0.4
+description: Gravatar for Ethereum
+repository: https://github.com/graphprotocol/example-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Escrow
+    network: kovan
+    source:
+      address: '0xAEEB1b1312d941e1bB2cBAA453F00852D008c1BD'
+      abi: Escrow
+      startBlock: 32217830 
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Depositor
+      abis:
+        - name: Escrow
+          file: ./abis/Escrow.json
+      eventHandlers:
+        - event: DepositFunds(indexed address,indexed uint256)
+          handler: handleDepositFunds
+      file: ./src/mapping.ts
